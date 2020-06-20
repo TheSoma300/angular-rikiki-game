@@ -17,7 +17,12 @@ import { RouterModule } from '@angular/router';
 import { SozGottaWaitComponent } from './features/soz-gotta-wait/soz-gotta-wait.component';
 import { UserStripComponent } from './rooms/lobby-room/user-strip/user-strip.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
+// dev:
+// url: 'http://localhost:4444'
+
+const config: SocketIoConfig = {
+  url: 'http://64.227.32.214:4444'
+};
 
 @NgModule({
   imports: [

@@ -35,11 +35,12 @@ import { UserHandComponent } from './user-hand/user-hand.component';
     PerfectScrollbarModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
   ],
   exports: [
     RoundPileComponent,
     UserCardComponent,
+    BettingModalComponent,
     UserHandComponent,
     OrderByPointsPipe,
     CorrectPlayerOrderPipe

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MenuService } from './services/menu-service/menu.service';
 
 @Component({
   selector: 'doc-root',

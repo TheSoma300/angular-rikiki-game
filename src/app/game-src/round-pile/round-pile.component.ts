@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Card } from 'src/app/interfaces/card.interface';
-import { IconService } from 'src/app/services/helper-services/icon.service';
-import { Suit } from 'src/app/shared/models/suit.model';
+import { Card } from '../../interfaces/card.interface';
+import { IconService } from '../../services/helper-services/icon.service';
 
 @Component({
   selector: 'asr-round-pile',
@@ -12,18 +11,25 @@ import { Suit } from 'src/app/shared/models/suit.model';
 export class RoundPileComponent implements OnInit {
   @Input() trump: Card;
   @Input() set cardOnTop(val: Card) {
-    this.isLoading = true;
-    this.justPlayedCard = Object.assign({}, val);
-    this._cards.push(this.justPlayedCard);
-    if (this._cards.length === 1) {
-      this.base = Object.assign({}, this.justPlayedCard);
-      this.baseImgSrc = this.iconService.getIconSrcFromId(this.base.uniqueId);
-      this.winnerCard = Object.assign({}, this.justPlayedCard);
-      this.winnerImgSrc = this.iconService.getIconSrcFromId(this.winnerCard.uniqueId);
+    console.log(val);
+    if (!val) {
+      this._cards = [];
+      this.justPlayedCard = null;
+      this.trump = null;
     } else {
-      this.determineWinnerCardSoFar();
+      this.isLoading = true;
+      this.justPlayedCard = Object.assign({}, val);
+      this._cards.push(this.justPlayedCard);
+      console.log(this._cards);
+      if (this._cards.length === 1) {
+        this.base = Object.assign({}, this.justPlayedCard);
+        this.baseImgSrc = this.iconService.getIconSrcFromId(this.base.uniqueId);
+        this.winnerCard = Object.assign({}, this.justPlayedCard);
+        this.winnerImgSrc = this.iconService.getIconSrcFromId(this.winnerCard.uniqueId);
+      } else {
+        this.determineWinnerCardSoFar();
+      }
     }
-
     this.isLoading = false;
   }
   @Input() set pileReset(val: Array<Card>) {
@@ -50,9 +56,7 @@ export class RoundPileComponent implements OnInit {
   private _cards: Array<Card> = [];
   constructor(private readonly iconService: IconService) { }
 
-  ngOnInit(): void {
-    console.log(this.trump);
-  }
+  ngOnInit(): void {}
   determineWinnerCardSoFar(): void {
     const trumps = this._cards.filter(card => card.suit === this.trump.suit);
     const bases = this._cards.filter(card => card.suit === this.base.suit);

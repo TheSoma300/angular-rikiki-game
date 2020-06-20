@@ -4,49 +4,20 @@
     </h1>
 </div>
 <ng-sidebar-container class="container" *ngIf="isAnimationDone">
-    <ng-sidebar class="sidebar-scoreboard ng-sidebar--right" 
+    <ng-sidebar class="sidebar-scoreboard ng-sidebar--left" 
         [(opened)]="scoreboardToggle"
-        [position]="'right'"
+        [position]="'left'"
         [dock]="true"
-        [dockedSize]="'25px'">
-        <div class="scoreboard-panel-container">
-            <div class="icon-container" (click)="toggleScorePanel()">
-                <img src="../../../assets/icons/score.png"/>
-            </div>
-            <div class="data-container">
-                <table class="scoreboard-table">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="ranked-player" *ngFor="let player of rankedPlayers | orderByPoints; let i = index">
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ player.name }}</td>
-                            <td>{{ player.points }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="bottom-cont">
-                    <div class="trump-container">
-                        <h4>Trump</h4>
-                        <doc-card [card]="trumpoCard" [roundType]="'normal'"></doc-card>
-                    </div>
-                    <div class="round-container">
-                        <h4>Round</h4>
-                        <div class="">{{ currentRound }}</div>
-                    </div>
-                </div>
-            </div>
+        dockedSize="100px">
+        <asr-betting-modal [options]="this.bettingOptions" (betMade)="handleBet($event)"></asr-betting-modal>
+        <div class="data-strip">
+            <div class="header">{{ roundData.me.username }} {{ getMyStatus() }}</div>
+            <div class="your-bets">Bets: {{ roundData.me.bets.bet }}</div>
+            <div class="your-hits">Hits: {{ roundData.me.bets.hits }}</div>
+            <div class="rotation"></div>
         </div>
     </ng-sidebar>
     <div class="content-container" ng-sidebar-content>
-        <mat-toolbar color="primary" class="toolbar">
-            <span class="title-center">Live Game</span>
-        </mat-toolbar>
         <div class="game-container">
             <div class="user-status-container">
                     <asr-user-card *ngFor="let usercard of (roundData.players | correctPlayerOrder : roundData.me.seatInd  )"
@@ -57,8 +28,38 @@
                         [iconTitle]="usercard.iconTitle"
                     ></asr-user-card>
             </div>
-            <div class="mid-section" *ngIf="cardOnTop !== null && trumpoCard">
-                <asr-round-pile [cardOnTop]="cardOnTop" [trump]="trumpoCard" [pileReset]="resetPile"></asr-round-pile>
+            <div class="mid-section">
+                <asr-round-pile [trump]="trumpoCard" [cardOnTop]="cardOnTop" [pileReset]="resetPile" *ngIf="trumpoCard && cardOnTop"></asr-round-pile>
+                <div class="scoreboard-panel-container">
+                    <div class="data-container">
+                        <table class="scoreboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="ranked-player" *ngFor="let player of rankedPlayers | orderByPoints; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ player.name }}</td>
+                                    <td>{{ player.points }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="bottom-cont">
+                            <div class="trump-container">
+                                <h4>Trump</h4>
+                                <doc-card [card]="trumpoCard" [roundType]="'normal'"></doc-card>
+                            </div>
+                            <div class="round-container">
+                                <h4>Round</h4>
+                                <div class="">{{ currentRound }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="user-action-container">
                 <!-- Info strip -->
