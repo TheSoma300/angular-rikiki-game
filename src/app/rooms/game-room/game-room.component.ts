@@ -429,13 +429,13 @@ export class GameRoomComponent implements OnInit {
         if (data.winnerId === this.userId) {
           this.canPlay = true;
           this.userInfo = `You won this hand and it's your turn!`;
+          this.roundData.me.bets.hits++;
         } else {
           this.canPlay = false;
           const nextToPlay = this.roundData.players.findIndex(playa => playa.uniqueId === data.winnerId);
           this.userInfo = `${this.roundData.players[nextToPlay].username} won this hand and it's their turn!`;
+          this.roundData.players[nextToPlay].bets.hits++;
           this.roundData.players[nextToPlay].status = 'Playing card...';
-
-
         }
       });
   }
