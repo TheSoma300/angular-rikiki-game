@@ -21,7 +21,7 @@ import { UserStripComponent } from './rooms/lobby-room/user-strip/user-strip.com
 // url: 'http://localhost:4444'
 
 const config: SocketIoConfig = {
-  url: 'http://64.227.32.214:4444'
+  url: 'http://localhost:4444'
 };
 
 @NgModule({
