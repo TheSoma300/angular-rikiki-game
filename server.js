@@ -435,7 +435,7 @@ function getRoundPoint(user) {
     const diff = Math.abs(user.bets.bet - user.bets.hits);
     console.log(`diff of ${user.bets.bet} and ${user.bets.hits} is ${diff}`);
     if (diff === 0) {
-        return (10 + (diff * 2));
+        return (10 + (user.bets.bet * 2));
     } else {
         return (diff * (-2));
     }
